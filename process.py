@@ -337,3 +337,17 @@ def get_inventory_insights(inventory_analysis):
     }
     
     return insights
+
+# Правка: добавлена функция фильтрации данных
+# (меняется часть другого человека — process)
+# Пользователь может анализировать не все данные сразу,
+# а, например, только один район или один отдел. ###################
+
+def apply_filters(data_clean, district=None, department=None):
+    if district:
+        data_clean = data_clean[data_clean["Район магазина"] == district]
+
+    if department:
+        data_clean = data_clean[data_clean["Отдел товара"] == department]
+
+    return data_clean
