@@ -231,7 +231,16 @@ def get_user_request():
     print()
 
     # спрашиваем путь к файлу
-    file_path = input("Введите путь к файлу CSV (например: Данные 1.csv): ").strip()
+    # Правка: предлагаем использовать последний файл
+last_file = load_last_file()
+if last_file:
+    use_last = input(f"Использовать последний файл ({last_file})? (да/нет): ").lower()
+    if use_last == "да":
+        file_path = last_file
+    else:
+        file_path = input("Введите путь к CSV-файлу: ")
+else:
+    file_path = input("Введите путь к CSV-файлу: ")
 
     # пробуем загрузить и подготовить данные
     data = load_sales_data(file_path)
@@ -381,4 +390,5 @@ def get_user_request():
             print("Не понял Ваш ответ. Завершаю программу. До свидания.")
             print('=' * 40)
             break
+
 
