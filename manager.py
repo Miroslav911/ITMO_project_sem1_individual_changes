@@ -41,11 +41,25 @@ def present_revenue_by_period(data, period='D'):
     colors = sns.color_palette("husl", len(values))
     plt.pie(values, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors)
     
-    plt.title(f'Распределение выручки по {title_period}', fontsize=16, fontweight='bold')
+    plt.title(f"Распределение выручки по {title_period}", fontsize=16, fontweight='bold')
     plt.axis('equal')
-    plt.tight_layout() # Делаем диаграмму круглой и оторбажаем
-    plt.show()
+    plt.tight_layout()
+# Правка: сохранение графика
+# (меняется часть другого человека)
+# Пользователь может сохранить результат анализа
+#### и использовать его позже без необходимости делать скриншоты #####
+import os
 
+if not os.path.exists("reports"):
+    os.makedirs("reports")
+
+save = input("Сохранить график в папку reports? (да/нет): ").strip().lower()
+if save == "да":
+    filename = f"revenue_by_{period}.png"
+    plt.savefig(os.path.join("reports", filename))
+    print(f"График сохранён: reports/{filename}")
+
+plt.show()
 
 
 def visualize_category_analysis(data_clean):
@@ -412,6 +426,7 @@ if district or department:
             print("Не понял Ваш ответ. Завершаю программу. До свидания.")
             print('=' * 40)
             break
+
 
 
 
