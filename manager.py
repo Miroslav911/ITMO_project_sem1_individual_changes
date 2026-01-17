@@ -250,9 +250,31 @@ else:
     if data_clean is None:
         print("Не получилось загрузить данные. Завершаю программу.")
         return
-    
+
+save_last_file(file_path)
+
+# Правка: мини-отчёт о данных после загрузки
+# (меняется часть другого человека)
+# Пользователь сразу видит, что данные загрузились корректно
+# и понимает, с какими данными он дальше работает
+print("Данные успешно загружены")
+print(f"Количество строк: {len(data_clean)}")
+print(f"Период данных: {data_clean['Дата'].min()} — {data_clean['Дата'].max()}")
+print("Доступные районы:", data_clean["Район магазина"].unique())
+print("Доступные отделы:", data_clean["Отдел товара"].unique())
+
+# Правка: фильтрация данных (меняется часть другого человека) Пользователь может работать не со всеми данными сразу, а только с нужным районом или отделом
+district = input("Введите район для фильтрации (или Enter для всех): ").strip()
+department = input("Введите отдел для фильтрации (или Enter для всех): ").strip()
+
+if district or department:
+    data_clean = apply_filters(
+        data_clean,
+        district=district if district else None,
+        department=department if department else None
+    )
+
     while True:
-        while True:
             print('=' * 40)
             print("Выберите функцию из списка ниже: ")
             print("1. Посчитать выручку за период.")
@@ -390,5 +412,6 @@ else:
             print("Не понял Ваш ответ. Завершаю программу. До свидания.")
             print('=' * 40)
             break
+
 
 
