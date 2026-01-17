@@ -2,6 +2,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 from process import load_sales_data, preprocess_data, calculate_profit_by_period, aggregate_sales_by_category, get_top_n_products, calculate_revenue_by_period, get_inventory_insights, analyze_inventory_turnover
+import os
+from process import apply_filters
+
+
+LAST_FILE_PATH = "last_file.txt"
+REPORTS_DIR = "reports"
+
+# Правка: сохраняем последний файл
+# (меняется часть другого человека)
+def save_last_file(path):
+    with open(LAST_FILE_PATH, "w", encoding="utf-8") as f:
+        f.write(path)
+
+def load_last_file():
+    if os.path.exists(LAST_FILE_PATH):
+        with open(LAST_FILE_PATH, "r", encoding="utf-8") as f:
+            return f.read().strip()
+    return None
 
 def present_revenue_by_period(data, period='D'):
     revenue_data = calculate_revenue_by_period(data, period)# Получаем данные из функции calculate_revenue_by_period
@@ -363,3 +381,4 @@ def get_user_request():
             print("Не понял Ваш ответ. Завершаю программу. До свидания.")
             print('=' * 40)
             break
+
